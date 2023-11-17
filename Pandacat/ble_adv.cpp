@@ -5,7 +5,6 @@
 #include <BLE2902.h>
 #include "ble_adv.h"
 
-
 BLECharacteristic *pCharacteristic;
 BLEServer *pServer;
 
@@ -35,37 +34,20 @@ class MyServerCallbacks : public BLEServerCallbacks {
 class MyCallbacks: public BLECharacteristicCallbacks {
     void onWrite(BLECharacteristic *pCharacteristic) {
       Serial.println("Inside onWrite fun");
-      /*
-      String rxValue = pCharacteristic->getValue();
+      std::string rxValue = pCharacteristic->getValue();
       Serial.println("Inside onWrite function");
       if (rxValue.length() > 0) {
         Serial.println("*********");
-        Serial.print("Received Value: ");
+        Serial.println("Received Value: ");
         for (int i = 0; i < rxValue.length(); i++)
           Serial.print(rxValue[i]);
 
         Serial.println();
         Serial.println("*********");
       }
-      */
     }
 };
 
-// Create the BLE Service
-BLEService* pService = pServer->createService(SERVICE_UUID);
-
-
-// Create the BLE Characteristic for receiving data (RX)
-BLECharacteristic* pCharacteristic_rx = pService->createCharacteristic(
-    CHARACTERISTIC_UUID_RX,
-    BLECharacteristic::PROPERTY_WRITE
-);
-
-// Create the BLE Characteristic for transmitting data (TX)
-BLECharacteristic* pCharacteristic_tx= pService->createCharacteristic(
-    CHARACTERISTIC_UUID_TX,
-    BLECharacteristic::PROPERTY_NOTIFY
-);
 
 void ble_setup() {
   Serial.begin(115200);
@@ -73,6 +55,23 @@ void ble_setup() {
   BLEDevice::init("Pandacat_UART_BLE");
   pServer = BLEDevice::createServer();
   pServer->setCallbacks(new MyServerCallbacks());
+
+  // Create the BLE Service
+  BLEService* pService = pServer->createService(SERVICE_UUID);
+
+  // Create the BLE Characteristic for receiving data (RX)
+  BLECharacteristic* pCharacteristic_rx = pService->createCharacteristic(
+      CHARACTERISTIC_UUID_RX,
+      BLECharacteristic::PROPERTY_WRITE
+  );
+
+  // Create the BLE Characteristic for transmitting data (TX)
+  BLECharacteristic* pCharacteristic_tx= pService->createCharacteristic(
+      CHARACTERISTIC_UUID_TX,
+      BLECharacteristic::PROPERTY_NOTIFY
+  );
+
+  pCharacteristic->setCallbacks(new MyCallbacks());
 
   pCharacteristic_tx->addDescriptor(new BLE2902());
   // Start the service
@@ -83,7 +82,7 @@ void ble_setup() {
   pAdvertising->start();
   Serial.println("Waiting for a connection...");    
 }
-
+/*
 void ble_tx()
 {
   Serial.println("inside tx function");
@@ -104,11 +103,12 @@ void ble_tx()
     Serial.println("inside for loop"+ String(txString));
   }
 }
-
+*/
 
 void ble_loop() {
   Serial.println("Inside ble loop");
   ble_setup();
+  /*
   while (true)
   { 
     Serial.println("inside while");
@@ -119,6 +119,7 @@ void ble_loop() {
     }
     delay(5000); // bluetooth stack will go into congestion, if too many packets are sent
   }
+  */
 }
 
 

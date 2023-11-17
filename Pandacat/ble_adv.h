@@ -3,6 +3,6 @@
 
 void ble_loop();
 void ble_setup();
-void ble_tx();
+//void ble_tx();
 
 #endif
