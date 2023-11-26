@@ -17,6 +17,7 @@ u_int8_t txValue=0;
 #define CHARACTERISTIC_UUID_TX "6E400003-B5A3-F393-E0A9-E50E24DCCA9E" // TX characteristic UUID
 
 // Callback function to handle BLE events
+
 class MyServerCallbacks : public BLEServerCallbacks {
   void onConnect(BLEServer* pServer) {
     deviceConnected = true;
@@ -51,35 +52,37 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 
 void ble_setup() {
   Serial.begin(115200);
+  Serial.println("1");
   // Create the BLE Server
   BLEDevice::init("Pandacat_UART_BLE");
   pServer = BLEDevice::createServer();
   pServer->setCallbacks(new MyServerCallbacks());
-
+  Serial.println("2");
   // Create the BLE Service
   BLEService* pService = pServer->createService(SERVICE_UUID);
-
+  Serial.println("3");
   // Create the BLE Characteristic for receiving data (RX)
   BLECharacteristic* pCharacteristic_rx = pService->createCharacteristic(
       CHARACTERISTIC_UUID_RX,
       BLECharacteristic::PROPERTY_WRITE
   );
-
+  Serial.println("4");
   // Create the BLE Characteristic for transmitting data (TX)
   BLECharacteristic* pCharacteristic_tx= pService->createCharacteristic(
       CHARACTERISTIC_UUID_TX,
       BLECharacteristic::PROPERTY_NOTIFY
   );
-
-  pCharacteristic->setCallbacks(new MyCallbacks());
-
-  pCharacteristic_tx->addDescriptor(new BLE2902());
+  Serial.println("5");
+  //pCharacteristic->setCallbacks(new MyCallbacks());
+  Serial.println("6");
+  //pCharacteristic_tx->addDescriptor(new BLE2902());
   // Start the service
   pService->start();
-
+  Serial.println("7");
   // Advertise the service
   BLEAdvertising* pAdvertising = pServer->getAdvertising();
   pAdvertising->start();
+  Serial.println("8");
   Serial.println("Waiting for a connection...");    
 }
 /*
@@ -107,7 +110,9 @@ void ble_tx()
 
 void ble_loop() {
   Serial.println("Inside ble loop");
+  Serial.println("0");
   ble_setup();
+  Serial.println("9");
   /*
   while (true)
   { 
