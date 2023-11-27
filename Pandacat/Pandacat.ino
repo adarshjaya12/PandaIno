@@ -2,9 +2,8 @@
 #include "wifi.h"
 #include "get_ip.h"
 #include "rtc_esp32.h"
-//#include "ble_adv.h"
 #include "nimBLE.h"
-
+#include "disp_time.h"
 
 
 void setup() {
@@ -14,7 +13,8 @@ void setup() {
   get_offset();
   get_rtc_time();
   //ble_loop();
-  nimBLE_loop();
+  //nimBLE_loop();
+  disp_loop();
 }
 
 void loop() {
