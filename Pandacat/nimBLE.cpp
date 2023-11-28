@@ -2,6 +2,7 @@
 #include "nimBLE.h"
 #include <NimBLEDevice.h>
 
+
 BLEServer *pServer = NULL;
 BLECharacteristic * pTxCharacteristic;
 bool deviceConnected = false;

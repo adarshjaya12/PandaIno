@@ -1,6 +1,6 @@
 #include<Arduino.h>
 #include<ESP32-HUB75-MatrixPanel-I2S-DMA.h>
-#include"disp_time.h"
+#include"disp_ex.h"
 
 
 #define R1_PIN 11
@@ -39,7 +39,7 @@ uint16_t myGREEN = dma_display->color565(0, 255, 0);
 uint16_t myBLUE = dma_display->color565(0, 0, 255);
 
 
-void disp_setup() {
+void disp_ex_setup() {
 
   //mxconfig.gpio.e = 18;
   //mxconfig.clkphase = false;
@@ -88,6 +88,6 @@ void disp_setup() {
   //drawText(0);
 }
 
-void disp_loop() {
+void disp_ex_loop() {
   disp_setup();
 }
