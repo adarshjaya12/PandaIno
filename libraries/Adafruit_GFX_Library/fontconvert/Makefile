@@ -1,11 +1,11 @@
 all: fontconvert
 
 CC     = gcc
-CFLAGS = -Wall -I/usr/local/include/freetype2 -I/usr/include/freetype2 -I/usr/include
-LIBS   = -lfreetype
+CFLAGS += -I/mingw64/include/freetype2/
+LIBS   = -L/mingw64/lib -lfreetype
 
 fontconvert: fontconvert.c
-	$(CC) $(CFLAGS) $< $(LIBS) -o $@
+	$(CC) $(CFLAGS) $< -o $@ $(LIBS)
 	strip $@
 
 clean:

@@ -6,11 +6,6 @@
 #include "get_ip.h"
 
 
-String public_ip_addr;
-
-long RAW_OFFSET;
-int DST_OFFSET;
-
 void get_ip()
 {
     if (WiFi.status() == WL_CONNECTED)
@@ -26,7 +21,9 @@ void get_ip()
         {
             // Check for the returning code
             String payload = http.getString();
-            String public_ip_addr = payload;
+            public_ip_addr = payload;
+            Serial.println("The obtained IP address is ");
+            Serial.println(public_ip_addr);
         }
         else
         {
