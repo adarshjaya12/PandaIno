@@ -10,8 +10,10 @@ String LOC_API_KEY="04bfef32a637b84b77fda449b00ea8e0";
 String WEATHER_API_KEY="72f6c969b4ea4282b22205445230212";
 
 
-void get_lat_long_info()
+bool get_lat_long_info()
 {
+  Serial.println("inside lat_long function");
+  bool lat_long_status=false;
   if (WiFi.status() == WL_CONNECTED)
     {
         String loc_endpoint = "http://api.ipstack.com/"+ public_ip_addr +"?"+"access_key="+LOC_API_KEY; // It will return json data
@@ -31,22 +33,30 @@ void get_lat_long_info()
             LONGITUDE=loc_object["longitude"];
             Serial.println(LATITUDE);
             Serial.println(LONGITUDE);
+            Serial.println("get_lat_long function executed");
+            return lat_long_status=true;
         }
         else
         {
             Serial.println("Error on HTTP request");
+            Serial.println("get_lat_long function not executed correctly");
+            return lat_long_status=false;
         }
         http.end(); // Free the resource
     }
     else
     {
         Serial.println("WiFi is not connected");
+        Serial.println("get_lat_long function not executed correctly");
+        return lat_long_status=false;
     }
 }
 
-void get_weatherinfo()
+bool get_weatherinfo()
 {
+  bool weather_status=false;
   get_lat_long_info();
+  Serial.println("Inside get_weather function");
   if (WiFi.status() == WL_CONNECTED)
     {
         String weather_endpoint = "http://api.weatherapi.com/v1/current.json?key="+WEATHER_API_KEY+"&q="+LATITUDE+","+LONGITUDE+"&aqi=yes"; // It will return json data
@@ -81,15 +91,21 @@ void get_weatherinfo()
             Serial.println(FEELSLIKE_C);
             Serial.println(FEELSLIKE_F);
             Serial.println(WEATHER_ICON);
+            Serial.println("get_weather_info function executed");
+            return weather_status=true;
         }
         else
         {
             Serial.println("Error on HTTP request");
+            Serial.println("get_weather_info function executed");
+            return weather_status=false;
         }
         http.end(); // Free the resource
     }
     else
     {
         Serial.println("WiFi is not connected");
+        Serial.println("get_weather_info function executed");
+        return weather_status=false;
     }
 }

@@ -2,6 +2,6 @@
 #define _RTC_ESP32_H_
 
 void print_local_time();
-void get_rtc_time();
+bool get_rtc_time();
 
 #endif

@@ -19,7 +19,7 @@ void clock_hex_type_setup() {
   // fix the screen with time
   dma_display->setTextSize(1);     // size 1 == 8 pixels high
   dma_display->setTextWrap(false); // Don't wrap at end of line - will do ourselves
-//  dma_display->setFont(&bitocra7);
+  //dma_display->setFont(&bitocra7);
 
   dma_display->setCursor(8, 12);    // start at top left, with 8 pixel of spacing
   dma_display->setTextColor(dma_display->color565(15, 82, 186));

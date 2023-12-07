@@ -3,7 +3,8 @@
 #include"clock_custom_12htype.h"
 #include <ESP32Time.h>
 #include "disp_setup.h"
-
+#include "global.h"
+//#include <Fonts/DeliriumNcv_Vm5e6pt7b.h>
 
 extern ESP32Time rtc;
 
@@ -20,42 +21,52 @@ void clock_custom_12htype_setup() {
   // fix the screen with time
   dma_display->setTextSize(1);     // size 1 == 8 pixels high
   dma_display->setTextWrap(false); // Don't wrap at end of line - will do ourselves
+  //dma_display->setFont(&DeliriumNcv_Vm5e6pt7b);
   dma_display->setTextColor(dma_display->color444(15,15,15));
   String hr;
   String min;
+  String time;
+  int tm_hour;
+  int tm_min;
   while(1)
   {
-    struct tm timeinfo = rtc.getTimeStruct();
-    String time;
-    if(timeinfo.tm_min<10)
+    tm_hour= rtc.getTime("%H").toInt();
+    tm_min= rtc.getTime("%M").toInt();
+    /*
+    if(IS_DAY==0)
     {
-      min="0"+String(timeinfo.tm_min);
+
+    }
+    */
+    if(tm_min<10)
+    {
+      min="0"+String(tm_min);
     }
     else
     {
-      min=String(timeinfo.tm_min);
+      min=String(tm_min);
     }
-    if(timeinfo.tm_hour<10)
+    if(tm_hour<10)
     {
-      hr="0"+String(timeinfo.tm_hour);
+      hr="0"+String(tm_hour);
     }
-    else if(timeinfo.tm_hour>10 && timeinfo.tm_hour<=12)
+    else if(tm_hour>=10 && tm_hour<=12)
+    { 
+      hr=String(tm_hour);
+    }
+    else if(tm_hour>12 && tm_hour<22)
     {
-      hr=String(timeinfo.tm_hour);
+      hr="0"+String(tm_hour-12);
     }
-    else if(timeinfo.tm_hour>12 && timeinfo.tm_hour<22)
+    else if(tm_hour>=22 && tm_hour<24)
     {
-      hr="0"+String(timeinfo.tm_hour-12);
+      hr=String(tm_hour-12);
     }
-    else if(timeinfo.tm_hour>=22 && timeinfo.tm_hour<24)
-    {
-      hr=String(timeinfo.tm_hour-12);
-    }
-    if(int(timeinfo.tm_hour)>=12)
+    if(int(tm_hour)>=12)
     {
       time=String(hr)+" "+String(min)+" PM";
     }
-    if(timeinfo.tm_hour<12)
+    if(tm_hour<12)
     {
       time=String(hr)+" "+String(min)+" AM";
     }
@@ -63,7 +74,6 @@ void clock_custom_12htype_setup() {
     dma_display->println(time);
     delay(1000);
     dma_display->clearScreen();
-
   }
   
 }

@@ -4,12 +4,10 @@
 #include <ESP32Time.h>
 #include<math.h>
 #include "disp_setup.h"
+//#include <Fonts/bitocra7.h>
 
 
 extern ESP32Time rtc;
-
-
-  
 
 
 void clock_progress_type_setup() {

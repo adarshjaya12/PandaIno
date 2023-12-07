@@ -1,3 +1,4 @@
+#include "WiFiType.h"
 #include<Arduino.h>
 #include<time.h>
 #include<WiFi.h>
@@ -15,9 +16,16 @@ void print_local_time()
   delay(1000);
 }
 
-void get_rtc_time()
+bool get_rtc_time()
 {   
-  Serial.println("inside Rtc function");
+  bool rtc_status=false;
+  while(1)
+  {
+    if(WiFi.status()==WL_CONNECTED)
+    {
+      break;
+    }
+  }
   if(WiFi.status()==WL_CONNECTED){
     Serial.println("Setting up RTC");
     configTime(RAW_OFFSET, DST_OFFSET, ntp_server);
@@ -27,8 +35,13 @@ void get_rtc_time()
       rtc.setTimeStruct(timeinfo);
   }
     //print_local_time(); Printing RTC for testing purpose.
+    Serial.println("get_rtc_status function executed");
+    return rtc_status=true;
   }
   else{
     Serial.println("WiFi is not connected");
+    Serial.println("get_rtc_status function executed");
+    return rtc_status=false;
   }
+  Serial.println("RTC timer set");
 }

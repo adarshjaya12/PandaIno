@@ -19,7 +19,10 @@ void printWifiStatus()
 }
 
 
-void wifisetup() {
+bool wifisetup() {
+    int count=0;
+    bool wifi_status=false;
+
     Serial.begin(115200);
     while (!Serial) { }
 
@@ -30,11 +33,15 @@ void wifisetup() {
     WiFi.mode(WIFI_STA);
     WiFi.begin(ssid, pass);
     while (WiFi.status() != WL_CONNECTED) {
+        count++;
         delay(500);
         Serial.print(".");
+        if(count==100)
+        {
+          Serial.println("\nNo wifi found");
+          return wifi_status=false;
+        }
     }
-
-    Serial.println("");
-    Serial.println("Connected to WiFi");
     printWifiStatus();
+    return wifi_status=true;
 }

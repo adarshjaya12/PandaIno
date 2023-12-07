@@ -2,6 +2,6 @@
 #define _WIFI_H_
 
 void printWifiStatus();
-void wifisetup();
+bool wifisetup();
 
 #endif

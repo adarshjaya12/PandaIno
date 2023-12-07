@@ -3,6 +3,7 @@
 #include"clock_date_time_type.h"
 #include <ESP32Time.h>
 #include "disp_setup.h"
+//#include <Fonts/bitocra7.h>
 
 
 #define PER_TEXT_SIZE 5
@@ -23,7 +24,7 @@ void clock_dt_type_setup() {
   // fix the screen with time
   dma_display->setTextSize(1);     // size 1 == 8 pixels high
   dma_display->setTextWrap(false); // Don't wrap at end of line - will do ourselves
-
+  //dma_display->setFont(&bitocra7);
   dma_display->setTextColor(dma_display->color444(15,15,15));
 
   String min;
