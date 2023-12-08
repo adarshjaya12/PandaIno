@@ -23,8 +23,13 @@ bool wifisetup() {
     int count=0;
     bool wifi_status=false;
 
+    String hostname = "PandaCat";
+
     Serial.begin(115200);
-    while (!Serial) { }
+
+    WiFi.mode(WIFI_STA);
+    WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE, INADDR_NONE);
+    WiFi.setHostname(hostname.c_str()); //define hostname
 
     Serial.print("Attempting to connect to SSID: ");
     Serial.println(ssid);
@@ -34,7 +39,7 @@ bool wifisetup() {
     WiFi.begin(ssid, pass);
     while (WiFi.status() != WL_CONNECTED) {
         count++;
-        delay(500);
+        delay(1000);
         Serial.print(".");
         if(count==100)
         {
