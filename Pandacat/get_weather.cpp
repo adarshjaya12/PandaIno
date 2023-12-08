@@ -14,6 +14,13 @@ bool get_lat_long_info()
 {
   Serial.println("inside lat_long function");
   bool lat_long_status=false;
+  while(1)
+  {
+    if(WiFi.status()==WL_CONNECTED)
+    {
+      break;
+    }
+  }
   if (WiFi.status() == WL_CONNECTED)
     {
         String loc_endpoint = "http://api.ipstack.com/"+ public_ip_addr +"?"+"access_key="+LOC_API_KEY; // It will return json data

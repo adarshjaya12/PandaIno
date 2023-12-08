@@ -10,20 +10,29 @@ bool get_ip()
 {
   bool ip_status=false;
   Serial.println("inside get_ip");
+  while(1)
+  {
+    if(WiFi.status()== WL_CONNECTED)
+    {
+      break;
+    }
+  }
   if (WiFi.status() == WL_CONNECTED)
   {
-    const String ip_endpoint = "https://ipapi.co/ip/"; // It will return the public IP
+    const String ip_endpoint = "https://api.ipify.org/?format=json"; // It will return the public IP
     HTTPClient http;
     http.begin(ip_endpoint);
     // To capture the response of the HTTP resonse code,
     // if the value is less than 0, then there is an error in the
     int httpCode = http.GET();
-
+    Serial.println(httpCode);
     if (httpCode > 0)
     {
         // Check for the returning code
       String payload = http.getString();
-      public_ip_addr = payload;
+      JSONVar ip_object=JSON.parse(payload);
+      //public_ip_addr = String(ip_object["ip"].asString().c_str());
+      public_ip_addr = String(JSON.stringify(ip_object["ip"]).c_str());
       Serial.println("The obtained IP address is ");
       Serial.println(public_ip_addr);
       Serial.println("get_ip function executed");
@@ -49,6 +58,13 @@ bool get_ip()
 bool get_offset()
 {
   bool offset_status=false;
+  while(1)
+  {
+    if(WiFi.status()==WL_CONNECTED)
+    {
+      break;
+    }
+  }
   if (WiFi.status() == WL_CONNECTED)
   {
     const String offset_endpoint = "https://worldtimeapi.org/api/ip/"; // It will return json data

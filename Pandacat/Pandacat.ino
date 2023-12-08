@@ -5,6 +5,7 @@
 #include "clock_date_time_type.h"
 #include "clock_custom_12htype.h"
 #include "clock_custom_24htype.h"
+#include "clock_fuzzy_logic_type.h"
 #include "get_weather.h"
 #include "get_news.h"
 #include "startup.h"
@@ -26,7 +27,8 @@ void setup()
   {
     Serial.println("WIFI connected/nIP data obtained/nOffset data obtained/nRTC setup/nWeather data obtained");
     //nimBLE_loop();  
-  } 
+  }
+  clock_fuzzy_logic_type_loop();
   //clock_progress_type_loop();
   //clock_hex_type_loop();
   //clock_dt_type_loop();

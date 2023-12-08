@@ -74,24 +74,27 @@ bool startup()
   dma_display = new MatrixPanel_I2S_DMA(mxconfig);
 
   // display logo
-  display_logo();
+  //display_logo();
   
   // setting up the wifi
   wifi_status=wifisetup();
+  Serial.println("hi");
   if(wifi_status==false)
   {
     Serial.println("Couldnt connect to internet");
     return false;
   }
+  /*
   while(1)
   {
-    Serial.print("*");
+    Serial.println("*");
     if(WiFi.status()==WL_CONNECTED)
     {
       Serial.println("Wifi connected in Startup");
       break;
     }
   }
+  */
   while(1)
   {
     display_wifi_not_connected_logo();
