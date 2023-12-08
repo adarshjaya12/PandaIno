@@ -41,15 +41,16 @@ bool get_lat_long_info()
             Serial.println(LATITUDE);
             Serial.println(LONGITUDE);
             Serial.println("get_lat_long function executed");
+            http.end(); // Free the resource
             return lat_long_status=true;
         }
         else
         {
             Serial.println("Error on HTTP request");
             Serial.println("get_lat_long function not executed correctly");
+            http.end(); // Free the resource
             return lat_long_status=false;
         }
-        http.end(); // Free the resource
     }
     else
     {
@@ -99,20 +100,21 @@ bool get_weatherinfo()
             Serial.println(FEELSLIKE_F);
             Serial.println(WEATHER_ICON);
             Serial.println("get_weather_info function executed");
+            http.end(); // Free the resource
             return weather_status=true;
         }
         else
         {
             Serial.println("Error on HTTP request");
-            Serial.println("get_weather_info function executed");
+            Serial.println("get_weather_info function not executed");
+            http.end(); // Free the resource
             return weather_status=false;
         }
-        http.end(); // Free the resource
     }
     else
     {
         Serial.println("WiFi is not connected");
-        Serial.println("get_weather_info function executed");
+        Serial.println("get_weather_info function not executed");
         return weather_status=false;
     }
 }

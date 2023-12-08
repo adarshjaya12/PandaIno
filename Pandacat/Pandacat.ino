@@ -25,7 +25,7 @@ void setup()
   }
   if (status==true)
   {
-    Serial.println("WIFI connected/nIP data obtained/nOffset data obtained/nRTC setup/nWeather data obtained");
+    Serial.println("###################################################\nWIFI connected \nIP data obtained \nOffset data obtained\nRTC setup\nWeather data obtained\n###################################################");
     //nimBLE_loop();  
   }
   clock_fuzzy_logic_type_loop();

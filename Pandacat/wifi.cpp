@@ -39,13 +39,8 @@ bool wifisetup() {
     WiFi.begin(ssid, pass);
     while (WiFi.status() != WL_CONNECTED) {
         count++;
-        delay(1000);
+        delay(500);
         Serial.print(".");
-        if(count==100)
-        {
-          Serial.println("\nNo wifi found");
-          return wifi_status=false;
-        }
     }
     printWifiStatus();
     return wifi_status=true;

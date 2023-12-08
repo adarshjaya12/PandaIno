@@ -63,24 +63,28 @@ void fuzzy_logic(int hour, int minute)
   }
 
   s2 = val[pos];
-  Serial.println("before if");
-  Serial.println(minute,base/2);
-  Serial.println(minute,60- base/2);
   if (minute <= (base / 2)) 
   {  // Case like "It's around/exactly Ten"
-      Serial.println("inside if 1");
       s2 = s3 = "";
-      Serial.println(hour);
-      s4 = hourList[hour - 1];  // Adjusting for 0-indexing
-      Serial.println(s4);
+      s4 = hourList[hour - 12 -1];  // Adjusting for 0-indexing
   }
   else if (minute >= 60 - (base / 2)) 
   {  // Case like "It's almost Ten"
-      Serial.println("inside if 2");
       s2 = s3 = "";
-      Serial.println(hour);
-      s4 = hourList[hour];
-      Serial.println(s4);
+      s4 = hourList[hour-12];
+  }
+  else
+  {
+    if(minute>30)
+    {
+      s3=b1; //to
+      s4=hourList[hour-12];
+    } 
+    else
+    {
+      s3=b0; //past
+      s4=hourList[hour-12-1];
+    }
   }
   fuzzy_time=String(begin)+String(s1)+String(s2)+String(s3)+String(s4);
   Serial.println(fuzzy_time);

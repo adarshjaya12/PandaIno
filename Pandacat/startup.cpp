@@ -15,7 +15,6 @@
 // setting up the RTC
 // getting the weather data
 
-
 void display_logo()
 {
   dma_display->begin();
@@ -74,47 +73,35 @@ bool startup()
   dma_display = new MatrixPanel_I2S_DMA(mxconfig);
 
   // display logo
-  //display_logo();
+
   
   // setting up the wifi
   wifi_status=wifisetup();
-  Serial.println("hi");
-  if(wifi_status==false)
-  {
-    Serial.println("Couldnt connect to internet");
-    return false;
-  }
-  /*
+
   while(1)
   {
-    Serial.println("*");
+    delay(10000);
     if(WiFi.status()==WL_CONNECTED)
     {
-      Serial.println("Wifi connected in Startup");
+      // getting the ip address and assigining to the global variable
+      get_ip_status=get_ip();
+      delay(10000);
+      // getting the raw and dt offset to set the rtc time
+      get_offset_status=get_offset();
+      delay(10000);
+      // setting up the rtc timer
+      get_rtc_status=get_rtc_time();
+      // getting the weather info
+      delay(10000);
+      get_weather_status=get_weatherinfo();
+      // holding for 5 second
+      delay(10000);
       break;
     }
-  }
-  */
-  while(1)
-  {
-    display_wifi_not_connected_logo();
-    delay(1000);
-    if(WiFi.status()==WL_CONNECTED)
+    else
     {
-    display_wifi_connected_logo();
-    // getting the ip address and assigining to the global variable
-    get_ip_status=get_ip();
-    // getting the raw and dt offset to set the rtc time
-    get_offset_status=get_offset();
-    // setting up the rtc timer
-    get_rtc_status=get_rtc_time();
-    // getting the weather info
-    get_weather_status=get_weatherinfo();
-    // holding for 5 second
-    delay(5000);
-    break;
+      Serial.println("Wifi not connected");
     }
-    Serial.println("Wifi not connected");
   }
   if(WiFi.status()==WL_CONNECTED && get_ip_status && get_offset_status && get_rtc_status && get_weather_status )
   {
